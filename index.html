@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS PART */
+        body { 
+            margin: 0; 
+            background: #ef9eb9; 
+            overflow: hidden; 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .hidden { display: none; }
+
+        /* Heart Style */
+        .heart-btn { 
+            font-size: 100px; 
+            cursor: pointer; 
+            animation: pulse 1.2s infinite; 
+            user-select: none;
+        }
+        @keyframes pulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.15); } 
+        }
+
+        /* Candle & Mini Cake */
+        .candle-box { margin-top: 30px; }
+        .mini-cake { font-size: 40px; }
+        .flame {
+            width: 12px; height: 18px; 
+            background: radial-gradient(#f3f368, #fe8f46); 
+            margin: 0 auto;
+            border-radius: 50% 50% 20% 20%; 
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker { 
+            from { opacity: 0.7; transform: translateY(2px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Page 2 Layout */
+        .birthday-text { 
+            color: #f8f6f7; 
+            font-size: 3rem; 
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+        .main-cake { width: 300px; z-index: 5; 
+        mix-blend-mode: multiply;}
+        
+        /* Cat Positioning */
+        .cat { width: 200px; position: absolute; z-index: 2; }
+        .p2 { top: 15%; right: 10%; }
+        .p3 { bottom: 30%; left: 10%; }
+        .p4 { bottom: 15%; right: 10%; }
+        .p5 { bottom: 15%; left: 10%; }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="container">
+        <div id="heart" class="heart-btn" onclick="revealCelebration()">❤️</div>
+        <div class="candle-box">
+            <div class="flame"></div>
+            <div class="mini-cake">🎂</div>
+        </div>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h1 class="birthday-text">Happiii birthdayy💗</h1>
+        <img src="download (8).jpeg" class="main-cake" alt="Birthday Cake">
+        
+        <img src="cat2.jpeg" class="cat p2">
+        <img src="cat3.jpeg" class="cat p3">
+        <img src="cat4.jpeg" class="cat p4">
+        <img src="Maxwell feliz cumpleaños meme gato xd.jpeg" class="cat p5">
+
+    </div>
+
+    <audio id="waiting" src="waiting.mp4" loop></audio>
+    <audio id="party" src="party.mp4" loop></audio>
+
+    <script>
+        /* JAVASCRIPT PART */
+        const song1 = document.getElementById('waiting');
+        const song2 = document.getElementById('party');
+
+        // Play the first song as soon as the user clicks anywhere on the page
+        document.body.addEventListener('click', () => {
+            if (song1.paused && document.getElementById('page2').classList.contains('hidden')) {
+                song1.play().catch(e => console.log("Audio play blocked by browser."));
+            }
+        }, { once: true });
+function revealCelebration() {
+    // Switches to the 2nd part
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+    
+    // Makes the 2nd part background pink
+    document.body.style.background = "pink";
+
+    // Fires the confetti explosion
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    // Music swap
+    song1.pause();
+    song2.play();
+    document.body.style.background = "f191b1";
+}
+        
+             
+        
+    </script>
+</body>
+</html>
